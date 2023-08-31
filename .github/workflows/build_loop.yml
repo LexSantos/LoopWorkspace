@@ -15,13 +15,13 @@ jobs:
     uses: ./.github/workflows/validate_secrets.yml
     secrets: inherit
     
-build:
-  needs: secrets
-  runs-on: macos-12
-  steps:
-  # Uncomment to manually select latest Xcode if needed
-    - name: Select Latest Xcode
-      run: "sudo xcode-select --switch /Applications/Xcode_14.1.app/Contents/Developer"
+  build:
+    needs: secrets
+    runs-on: macos-12
+    steps:
+      # Uncomment to manually select latest Xcode if needed
+      - name: Select Latest Xcode
+        run: "sudo xcode-select --switch /Applications/Xcode_14.1.app/Contents/Developer"
 
       # Checks-out the repo
       - name: Checkout Repo
@@ -36,7 +36,6 @@ build:
       https://raw.githubusercontent.com/loopandlearn/lnl-scripts/main/CustomizationSelect.sh)" \
       omnipod_cage \
       dexcom_sage \
-      #  no_auth \
       future_carbs_4h \
       override_sens \
       limit_loop_cycle_time \
@@ -45,9 +44,9 @@ build:
       algorithm_experiments
 
     	# the final customization listed above CANNOT have a continuation character "\"
-
-      # LoopWorkspace commit: Adds xDrip4iOS and GlucoseDirect CGM clients
-      # Note - the added submodules must be cloned before the patch will workecho "Downloading code to support xdrip-client-swift"
+# LoopWorkspace commit: Adds xDrip4iOS and GlucoseDirect CGM clients
+          # Note - the added submodules must be cloned before the patch will work
+          echo "Downloading code to support xdrip-client-swift"
           git clone https://github.com/johandegraeve/xdrip-client-swift-1.git xdrip-client-swift
           echo "Downloading code to support GlucoseDirectClient"
           git clone https://github.com/creepymonster/GlucoseDirectClient.git GlucoseDirectClient
@@ -56,7 +55,6 @@ build:
           curl https://github.com/loopnlearn/LoopWorkspace/commit/4092277a21fa44a1258b693a5fbcce4d8d9dbd17.patch | git apply
           
           # more customizations can be pasted after this line
-
       
       # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
