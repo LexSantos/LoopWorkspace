@@ -31,29 +31,23 @@ jobs:
           
       # Customize Loop: Download and apply patches
       - name: Customize Loop
-        run: | 
+      run: | 
+      /bin/bash -c "$(curl -fsSL \
+      https://raw.githubusercontent.com/loopandlearn/lnl-scripts/main/CustomizationSelect.sh)" \
+      omnipod_cage \
+      dexcom_sage \
+      #  no_auth \
+      future_carbs_4h \
+      override_sens \
+      limit_loop_cycle_time \
+      customtypeone_looppatches \
+      2002 \
+      algorithm_experiments
 
-          # The lines below add the customizations listed using the CustomizationSelect script
-          # The "\" is a continuation character 
-          # The line following a "\" cannot be blank - that causes the Action to never complete
-          /bin/bash -c "$(curl -fsSL \
-          https://raw.githubusercontent.com/loopandlearn/lnl-scripts/main/CustomizationSelect.sh)" \
-          omnipod_cage \
-          dexcom_sage \
-          #  no_auth \
-          future_carbs_4h \
-          override_sens \
-          limit_loop_cycle_time \
-          customtypeone_looppatches \
-          2002 \
-          algorithm_experiments
-
-          # the final customization listed above CANNOT have a continuation character "\"
-          # more customizations can be pasted after this line
+    	# the final customization listed above CANNOT have a continuation character "\"
 
       # LoopWorkspace commit: Adds xDrip4iOS and GlucoseDirect CGM clients
-          # Note - the added submodules must be cloned before the patch will work
-          echo "Downloading code to support xdrip-client-swift"
+      # Note - the added submodules must be cloned before the patch will workecho "Downloading code to support xdrip-client-swift"
           git clone https://github.com/johandegraeve/xdrip-client-swift-1.git xdrip-client-swift
           echo "Downloading code to support GlucoseDirectClient"
           git clone https://github.com/creepymonster/GlucoseDirectClient.git GlucoseDirectClient
